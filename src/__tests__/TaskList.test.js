@@ -1,9 +1,21 @@
 import "@testing-library/jest-dom";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import TaskList from "../components/TaskList";
-import { TASKS } from "../data";
 
-test("displays all items when initially rendered", () => {
-  const { container } = render(<TaskList tasks={TASKS} />);
-  expect(container.querySelectorAll(".task")).toHaveLength(TASKS.length);
+const TASKS = [
+  { text: "Buy groceries", category: "Food" },
+  { text: "Finish project", category: "Work" },
+];
+
+test("renders a Task component for each task", () => {
+  render(
+    <TaskList
+      tasks={TASKS}
+      selectedCategory="All"
+      onDeleteTask={() => {}}
+    />
+  );
+
+  expect(screen.getByText("Buy groceries")).toBeInTheDocument();
+  expect(screen.getByText("Finish project")).toBeInTheDocument();
 });
